@@ -37,14 +37,14 @@ export async function GET() {
     const events: CalendarEvent[] = bookings.docs.flatMap((booking: Booking) => {
       const { bookingType, accommodation, event } = booking;
     
-      if ((bookingType === 'accommodation' || bookingType === 'combined') && accommodation?.checkIn) {
+      if ((bookingType === 'accommodation') && accommodation?.checkIn) {
         const checkInEvent: CalendarEvent = {
           date: accommodation.checkIn,
-          color: bookingType === 'combined' ? 'combine' : 'orange',
+          color: 'orange',
         };
         const checkOutEvent: CalendarEvent | null = accommodation.checkOut ? {
           date: accommodation.checkOut,
-          color: bookingType === 'combined' ? 'combine' : 'orange',
+          color: 'orange',
         } : null;
         return [checkInEvent, checkOutEvent].filter(Boolean) as CalendarEvent[];
       }
@@ -54,6 +54,22 @@ export async function GET() {
           date: event.eventDate,
           color: 'blue',
         }];
+      }
+
+      if (bookingType === 'combined' && accommodation?.checkIn && event?.eventDate){
+        const checkInEvent: CalendarEvent = {
+          date: accommodation.checkIn,
+          color: 'combine',
+        };
+        const checkOutEvent: CalendarEvent | null = accommodation.checkOut ? {
+          date: accommodation.checkOut,
+          color: 'combine',
+        } : null;
+        const event_Date: CalendarEvent | null = event.eventDate ? {
+          date: event.eventDate,
+          color: 'combine',
+        } : null;
+        return [checkInEvent, checkOutEvent, event_Date].filter(Boolean) as CalendarEvent[];
       }
     
       return [];

@@ -35,7 +35,11 @@ export async function POST(req: Request) {
       guest_info_email: booking.guestInfo?.email || booking.guestEmail,
       guest_info_phone: booking.guestInfo?.phone || booking.guestPhone,
       special_requests: booking.specialRequests ||  null,
-      status: booking.status || 'pending'
+      status: booking.status || 'pending',
+      event_date: booking.event?.eventDate || booking.eventDate,
+      event_start_time: booking.event?.startTime || booking.startTime,
+      event_end_time: booking.event?.endTime || booking.endTime,
+      event_guests: booking.event?.guests || booking.eventGuests, 
     };
 
      // booking
@@ -88,6 +92,119 @@ export async function POST(req: Request) {
       });
 
     }
+
+     // event 
+    if(bookingData.booking_type == 'event'){
+      console.log("booking: ",bookingData)
+
+      // Check availability
+      const availability = await checkEventAvailability(bookingData.event_date)
+      console.log("availability: ", availability)
+
+      if (!availability) {
+      //   return Response.json({ error: 'Room not available for selected dates' })
+          return new Response(JSON.stringify({ message: 'Room not available for selected dates' }), { 
+              status: 400, // Bad Request
+              headers: { 'Content-Type': 'application/json' },
+          });
+      }
+
+      // Create booking
+      const { data, error } = await supabase
+        .from('bookings')
+        .insert({
+          booking_type: bookingData.booking_type,
+          event_event_date: bookingData.event_date,
+          event_start_time: bookingData.event_start_time,
+          event_end_time: bookingData.event_end_time, 
+          event_guests: bookingData.event_guests,
+          guest_info_first_name: bookingData.guest_info_first_name,
+          guest_info_last_name: bookingData.guest_info_last_name,
+          guest_info_email: bookingData.guest_info_email,
+          guest_info_phone: bookingData.guest_info_phone,
+          special_requests: bookingData.special_requests ? bookingData.special_requests : null,
+          status: bookingData.status
+        })
+        .select()
+    
+      // return Response.json({ data, error })
+      if (error) {
+        console.log(error)
+          return new Response(JSON.stringify({ message: 'Failed to create booking', error }), {
+              status: 500, // Internal Server Error
+              headers: { 'Content-Type': 'application/json' },
+          });
+      }
+
+      return new Response(JSON.stringify({ message: 'Booking successful', data }), {
+          status: 200, // OK
+          headers: { 'Content-Type': 'application/json' },
+      });
+
+    }
+
+    //combined
+    if(booking.bookingType == 'combined'){
+      // Check event availability
+      const eventAvailability = await checkEventAvailability(bookingData.event_date)
+      console.log("eventAvailability: ", eventAvailability)
+
+      if (!eventAvailability) {
+      //   return Response.json({ error: 'Room not available for selected dates' })
+          return new Response(JSON.stringify({ message: 'Room not available for selected dates' }), { 
+              status: 400, // Bad Request
+              headers: { 'Content-Type': 'application/json' },
+          });
+      }
+
+      // Check room availability
+      const roomAvailability = await checkRoomAvailability(bookingData.accommodation_room_id, bookingData.accommodation_check_in, bookingData.accommodation_check_out)
+      console.log("roomAvailability: ", roomAvailability)
+
+      if (!roomAvailability) {
+      //   return Response.json({ error: 'Room not available for selected dates' })
+          return new Response(JSON.stringify({ message: 'Room not available for selected dates' }), { 
+              status: 400, // Bad Request
+              headers: { 'Content-Type': 'application/json' },
+          });
+      }
+
+      // Create booking
+      const { data, error } = await supabase
+        .from('bookings')
+        .insert({
+          booking_type: bookingData.booking_type,
+          accommodation_room_id: bookingData.accommodation_room_id,
+          accommodation_check_in: bookingData.accommodation_check_in,
+          accommodation_check_out: bookingData.accommodation_check_out, 
+          accommodation_guests: bookingData.accommodation_guests,
+          guest_info_first_name: bookingData.guest_info_first_name,
+          guest_info_last_name: bookingData.guest_info_last_name,
+          guest_info_email: bookingData.guest_info_email,
+          guest_info_phone: bookingData.guest_info_phone,
+          special_requests: bookingData.special_requests ? bookingData.special_requests : null,
+          status: bookingData.status,
+          event_event_date: bookingData.event_date,
+          event_start_time: bookingData.event_start_time,
+          event_end_time: bookingData.event_end_time, 
+          event_guests: bookingData.event_guests,
+        })
+        .select()
+
+      if (error) {
+        console.log(error)
+          return new Response(JSON.stringify({ message: 'Failed to create booking', error }), {
+              status: 500, // Internal Server Error
+              headers: { 'Content-Type': 'application/json' },
+          });
+      }
+
+      return new Response(JSON.stringify({ message: 'Booking successful', data }), {
+          status: 200, // OK
+          headers: { 'Content-Type': 'application/json' },
+      });
+    } 
+
   } catch (e) {
     console.log(e);
     return new Response(JSON.stringify({ message: 'Invalid request format', e }), {
@@ -95,64 +212,6 @@ export async function POST(req: Request) {
         headers: { 'Content-Type': 'application/json' }
     });
   }
-
- 
-
-  // event 
-  if(booking.bookingType == 'event'){
-    console.log("booking: ",booking)
-
-    // Check availability
-    const availability = await checkEventAvailability(booking.event.eventDate)
-    console.log("availability: ", availability)
-
-    if (!availability) {
-    //   return Response.json({ error: 'Room not available for selected dates' })
-        return new Response(JSON.stringify({ message: 'Room not available for selected dates' }), { 
-            status: 400, // Bad Request
-            headers: { 'Content-Type': 'application/json' },
-        });
-    }
-
-    // Create booking
-    const { data, error } = await supabase
-      .from('bookings')
-      .insert({
-        booking_type: booking.bookingType,
-        event_event_date: booking.eventDate,
-        event_start_time: booking.event.startTime,
-        event_end_time: booking.event.endTime, 
-        event_guests: booking.eventGuests,
-        guest_info_first_name: booking.guestInfo.firstName,
-        guest_info_last_name: booking.guestInfo.lastName,
-        guest_info_email: booking.guestInfo.email,
-        guest_info_phone: booking.guestInfo.phone,
-        special_requests: booking.specialRequests ? booking.specialRequests : null,
-        status: booking.status
-      })
-      .select()
-  
-    // return Response.json({ data, error })
-    if (error) {
-        return new Response(JSON.stringify({ message: 'Failed to create booking', error }), {
-            status: 500, // Internal Server Error
-            headers: { 'Content-Type': 'application/json' },
-        });
-    }
-
-    return new Response(JSON.stringify({ message: 'Booking successful', data }), {
-        status: 200, // OK
-        headers: { 'Content-Type': 'application/json' },
-    });
-
-  }
-
-  //combined
-  if(booking.bookingType == 'combined'){
-    // Check availability
-   
-
-  } 
 
 }
 

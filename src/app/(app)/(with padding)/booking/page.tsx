@@ -38,6 +38,7 @@ const BookingPage = () => {
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [specialRequests, setSpecialRequests] = useState('');
+    const [eventType, setEventType] = useState('');
 
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
@@ -58,6 +59,8 @@ const BookingPage = () => {
             guestPhone,
             accommodationGuests,
             eventGuests,
+            startTime,
+            endTime,
         }
       
         console.log(booking);
@@ -276,7 +279,10 @@ const BookingPage = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                             <label className="block text-sm font-medium text-gray-700">Event Type</label>
-                            <select className="mt-1 block w-full rounded-md border border-gray-300 p-2">
+                            <select 
+                            className="mt-1 block w-full rounded-md border border-gray-300 p-2"
+                            onChange={(e) => setEventType(e.target.value)}
+                            >
                                 <option>Wedding</option>
                                 <option>Birthday Party</option>
                                 <option>Corporate Event</option>
@@ -463,14 +469,14 @@ const BookingPage = () => {
                                         ))}
                                     </select> */}
                                     <select 
-                                    value={roomType} 
-                                    className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-                                    onChange={(e) => setRoomType(e.target.value)}
-                                    >
-                                    {accommodations.map(room => (
-                                        <option key={room.id} value={room.id}>{room.name} - ${room.price}/night</option>
-                                    ))}
-                                </select>
+                                        value={roomType} 
+                                        className="mt-1 block w-full rounded-md border border-gray-300 p-2"
+                                        onChange={(e) => setRoomType(e.target.value)}
+                                        >
+                                        {accommodations.map(room => (
+                                            <option key={room.id} value={room.id}>{room.name} - ${room.price}/night</option>
+                                        ))}
+                                    </select>
                                 </div>
 
                                 {/* Number of Guests */}
@@ -492,7 +498,10 @@ const BookingPage = () => {
                                 <h2 className="text-lg font-semibold">Event</h2>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">Event Type</label>
-                                    <select className="mt-1 block w-full rounded-md border border-gray-300 p-2">
+                                    <select 
+                                    className="mt-1 block w-full rounded-md border border-gray-300 p-2"
+                                    onChange={(e) => setEventType(e.target.value)}
+                                    >
                                         <option>Wedding</option>
                                         <option>Birthday Party</option>
                                         <option>Corporate Event</option>
