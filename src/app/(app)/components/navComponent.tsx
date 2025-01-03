@@ -8,7 +8,7 @@ function classNames(...classes: string[]) {
 return classes.filter(Boolean).join(' ')
 }
 
-const navComponent = () => {
+const NavComponent = () => {
   const pathname = usePathname()
 
   const navigation = [
@@ -44,4 +44,4 @@ const navComponent = () => {
   )
 }
 
-export default navComponent 
+export default NavComponent 

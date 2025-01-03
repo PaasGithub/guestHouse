@@ -100,6 +100,8 @@ export async function POST(req: Request) {
 
   // event 
   if(booking.bookingType == 'event'){
+    console.log("booking: ",booking)
+
     // Check availability
     const availability = await checkEventAvailability(booking.event.eventDate)
     console.log("availability: ", availability)
@@ -112,16 +114,15 @@ export async function POST(req: Request) {
         });
     }
 
-    console.log("booking: ",booking)
-
     // Create booking
     const { data, error } = await supabase
       .from('bookings')
       .insert({
         booking_type: booking.bookingType,
-        event_event_date: booking.event.eventDate,
+        event_event_date: booking.eventDate,
         event_start_time: booking.event.startTime,
         event_end_time: booking.event.endTime, 
+        event_guests: booking.eventGuests,
         guest_info_first_name: booking.guestInfo.firstName,
         guest_info_last_name: booking.guestInfo.lastName,
         guest_info_email: booking.guestInfo.email,

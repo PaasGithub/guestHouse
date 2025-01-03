@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image';
 // app/accommodations/page.tsx
 
 //  import {accommodations} from '../../lib/data'
@@ -25,6 +26,7 @@ interface Accommodation {
   useEffect(() => {
     const fetchAccommodations = async () => {
       const response = await fetch('/api/accommodations');
+      console.log(response);
       const data = await response.json();
       setAccommodations(data.docs);
     };
@@ -37,10 +39,17 @@ interface Accommodation {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {accommodations.map((room) => (
           <div key={room.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img 
+            {/* <img 
               src={room.image.url} 
               alt={room.name}
               className="w-full h-48 object-cover"
+            /> */}
+            <Image 
+              src={room.image.url} 
+              alt={room.name}
+              className="w-full h-48 object-cover"
+              width={500}
+              height={500}
             />
             <div className="p-6">
               <h2 className="text-xl font-semibold">{room.name}</h2>

@@ -50,12 +50,14 @@ const BookingPage = () => {
             roomType,
             checkIn,
             checkOut,
+            eventDate,
             guestFirstName,
             guestLastName,
             guestEmail,
             specialRequests,
             guestPhone,
-            accommodationGuests
+            accommodationGuests,
+            eventGuests,
         }
       
         console.log(booking);
@@ -271,7 +273,7 @@ const BookingPage = () => {
                 {bookingType === 'event' && (
                     <div className="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg text-black">
                         <h1 className="text-2xl font-bold mb-8">Book For an Event</h1>
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                             <label className="block text-sm font-medium text-gray-700">Event Type</label>
                             <select className="mt-1 block w-full rounded-md border border-gray-300 p-2">
@@ -354,32 +356,41 @@ const BookingPage = () => {
                                     type="text"
                                     placeholder="First Name"
                                     className="w-full p-3 border rounded-lg"
+                                    onChange={(e) => setGuestFirstName(e.target.value)} 
                                     required
                                     />
                                     <input
                                     type="text"
                                     placeholder="Last Name"
                                     className="w-full p-3 border rounded-lg"
+                                    onChange={(e) => setGuestLastName(e.target.value)}
                                     required
                                     />
                                     <input
                                     type="email"
                                     placeholder="Email"
                                     className="w-full p-3 border rounded-lg"
+                                    onChange={(e) => setGuestEmail(e.target.value)} 
                                     required
                                     />
                                     <input
                                     type="tel"
                                     placeholder="Phone"
                                     className="w-full p-3 border rounded-lg"
+                                    onChange={(e) => setGuestPhone(e.target.value)} 
                                     required
                                     />
                                 </div>
                             </div>
 
+                            {/* Special Requests */}
                             <div>
-                            <label className="block text-sm font-medium text-gray-700">Special Requests</label>
-                            <textarea className="mt-1 block w-full rounded-lg border border-gray-300 p-2" rows={3}></textarea>
+                                <label className="block text-sm font-medium mb-2">Special Requests</label>
+                                <textarea
+                                    className="w-full p-3 border rounded-lg h-32"
+                                    placeholder="Any special requirements or requests..."
+                                    onChange={(e) => setSpecialRequests(e.target.value)}
+                                />
                             </div>
 
                             <button type="submit" className="w-full bg-gray-900 text-white py-3 px-4 rounded-lg hover:bg-gray-800">
@@ -562,24 +573,28 @@ const BookingPage = () => {
                                         type="text"
                                         placeholder="First Name"
                                         className="w-full p-3 border rounded-lg"
+                                        onChange={(e) => setGuestFirstName(e.target.value)} 
                                         required
                                         />
                                         <input
                                         type="text"
                                         placeholder="Last Name"
                                         className="w-full p-3 border rounded-lg"
+                                        onChange={(e) => setGuestLastName(e.target.value)}
                                         required
                                         />
                                         <input
                                         type="email"
                                         placeholder="Email"
                                         className="w-full p-3 border rounded-lg"
+                                        onChange={(e) => setGuestEmail(e.target.value)} 
                                         required
                                         />
                                         <input
                                         type="tel"
                                         placeholder="Phone"
                                         className="w-full p-3 border rounded-lg"
+                                        onChange={(e) => setGuestPhone(e.target.value)} 
                                         required
                                         />
                                     </div>
@@ -591,6 +606,7 @@ const BookingPage = () => {
                                     <textarea
                                         className="w-full p-3 border rounded-lg h-32"
                                         placeholder="Any special requirements or requests..."
+                                        onChange={(e) => setSpecialRequests(e.target.value)}
                                     />
                                 </div>
 

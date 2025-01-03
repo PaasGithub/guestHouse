@@ -1,5 +1,9 @@
 
 import { CollectionConfig } from 'payload';
+import CalendarComponent from '../components/BookingCalendarView';
+// import React from 'react';
+
+// const CalComponent = React.lazy(() => import('../components/BookingCalendarView'));
 
 const Booking: CollectionConfig = {
  slug: 'bookings',
@@ -30,7 +34,7 @@ const Booking: CollectionConfig = {
             date:{
                 pickerAppearance: 'dayOnly',
                 displayFormat: 'd MMM yyy',
-                minDate: new Date().toISOString(),
+                minDate: new Date(),
             },
          },
          required: true,
@@ -43,7 +47,7 @@ const Booking: CollectionConfig = {
             date: {
                 pickerAppearance: 'dayOnly',
                 displayFormat: 'd MMM yyy',
-                minDate: new Date().toISOString(),
+                minDate: new Date(),
                 // validateInput: async ({ value, data }) => {
                 //     if (data.accommodation?.checkIn && value < data.accommodation.checkIn) {
                 //         return 'Check-out date must be after check-in date';
@@ -88,7 +92,7 @@ const Booking: CollectionConfig = {
             date:{
                 pickerAppearance: 'dayOnly',
                 displayFormat: 'd MMM yyy',
-                minDate: new Date().toISOString(),
+                minDate: new Date(),
             },
          },
        },
@@ -157,15 +161,17 @@ const Booking: CollectionConfig = {
    }
  ],
  admin: {
-    // useAsTitle: 'guestInfo.firstName'
+    components: {
+      beforeList: CalendarComponent,
+      // beforeList: CalComponent,
+    },
     defaultColumns: [
-        'guestInfo',
-        'bookingType',
-        'accommodation',
-        // 'guestInfofirstName',
-          
+      'guestInfo',
+      'bookingType',
+      'accommodation',
+      // 'guestInfofirstName',
     ],
-  }
+  },
 
 };
 
