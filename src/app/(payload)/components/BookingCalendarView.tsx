@@ -1,24 +1,24 @@
 'use client';
 
-import { CustomComponent } from 'payload';
+// import { CustomComponent } from 'payload';
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-
+import './CalendarComponent.css';
 type Event = {
   date: string; // ISO 8601 string, e.g., "2024-01-01"
   color: string; // CSS color, e.g., "red", "#FF0000"
 };
 
-const CalendarComponent: React.FC<CustomComponent> = () => {
+const CalendarComponent: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
     // Load CSS and set events
-    const loadCSS = async () => {
-      await import('./CalendarComponent.css');
-    };
+    // const loadCSS = async () => {
+    //   await import('./CalendarComponent.css');
+    // };
 
-    loadCSS();
+    // loadCSS();
 
     // const dummyEvents: Event[] = [
     //   { date: '2024-01-01', color: 'orange' },

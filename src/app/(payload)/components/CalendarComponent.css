@@ -183,23 +183,40 @@ background-color: #e6e6e6;
   border-radius: 5px;
 }
 
-.calendar-event-orange abbr {
-  background-color: orange;
-  padding:5px;
-  border-radius: 5px;
+.calendar-event-orange {
+  /* background-color: orange; */
+  background-color: rgba(255, 165, 0);
+  /* padding:5px;
+  border-radius: 5px; */
   color: white;
 }
 
-.calendar-event-blue abbr {
+/* .calendar-event-blue abbr {
   background-color: blue;
   padding:5px;
   border-radius: 5px;
   color: white;
+} */
+
+.calendar-event-blue {
+  background-color: blue;
+  color: white;
+}
+.calendar-event-combine  {
+  background: linear-gradient(to bottom, orange, blue);
+  /* padding:5px;
+  border-radius: 5px; */
+  color: white;
 }
 
-.calendar-event-combine abbr {
-  background: linear-gradient(to right, orange, blue);
-  padding:5px;
-  border-radius: 5px;
-  color: white;
+.calendar-event-faded-orange {
+  background-color: rgba(255, 165, 0, 0.5); /* Adjust opacity for faded effect */
+}
+
+.calendar-event-faded-blue {
+  background-color: rgba(0, 0, 225, 0.5); /* Adjust opacity for faded effect */
+}
+
+.calendar-event-faded-combine {
+  background-color: rgba(128, 0, 128, 0.5); /* Faded combine color */
 }

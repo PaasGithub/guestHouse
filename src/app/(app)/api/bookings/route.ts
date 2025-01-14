@@ -216,26 +216,43 @@ export async function POST(req: Request) {
 }
 
 async function checkRoomAvailability(roomId: number, checkIn: Date, checkOut: Date) {
-  console.log('Checking availability: ', roomId, checkIn, checkOut);
-    const { data: existingBookings, error } = await supabase
-      .from('bookings')
-      .select('*')
-      .eq('accommodation_room_id', roomId)
-      .neq('status', 'cancelled')
-      // .or(`accommodation_check_in.lte.${checkOut},accommodation_check_out.gte.${checkIn}`)
-      .filter('accommodation_check_in', 'lt', checkOut)
-      .filter('accommodation_check_out', 'gt', checkIn);
+  console.log('Checking availability: ', 'roomid: ',roomId, 'checkin: ',checkIn, 'checkout: ',checkOut);
 
-      
+  // Fetch accommodation details
+  const { data: accommodation, error: accommodationError } = await supabase
+    .from('accommodations')
+    .select('total_units_available')
+    .eq('id', roomId)
+    .single();
 
-   
-    if (error) {
-        console.log(error)
-      throw new Error('Failed to check availability')
-    }
-   
-    console.log("availabel: ", existingBookings)
-    return existingBookings.length === 0
+  if (accommodationError || !accommodation) {
+    console.log(accommodationError || 'Accommodation not found');
+    throw new Error('Failed to fetch accommodation details');
+  }
+
+  const {  data: overlappingBookings, error: bookingsError } = await supabase
+    .from('bookings')
+    .select('*')
+    .eq('accommodation_room_id', roomId)
+    .neq('status', 'cancelled')
+    // .or(`accommodation_check_in.lte.${checkOut},accommodation_check_out.gte.${checkIn}`)
+    .filter('accommodation_check_in', 'lt', checkOut)
+    .filter('accommodation_check_out', 'gt', checkIn);
+
+    
+  if (bookingsError) {
+    console.log(bookingsError);
+    throw new Error('Failed to check availability')
+  }
+
+  // Calculate units left
+  const unitsLeft = accommodation.total_units_available - (overlappingBookings?.length || 0);
+  console.log(`Units available for room ${roomId}: `, unitsLeft);
+  
+  // console.log("available: ", existingBookings)
+  // return existingBookings.length === 0
+  // Return whether the room is available
+  return unitsLeft > 0;
 }
 
 async function checkEventAvailability(eventDate: Date) {

@@ -33,10 +33,22 @@ const Accommodation: CollectionConfig = {
       name: 'price',
       type: 'number',
       required: true,
+    },
+    {
+      name: 'totalUnitsAvailable',
+      type: 'number',
+      required: true,
     }
   ],
   admin: {
-    useAsTitle: 'name'
+    useAsTitle: 'name',
+    defaultColumns: [
+      'name', 
+      'description', 
+      'price', 
+      'totalUnitsAvailable'
+    ],
+  
   }
 };
 

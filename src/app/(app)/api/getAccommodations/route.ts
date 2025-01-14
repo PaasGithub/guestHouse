@@ -1,5 +1,5 @@
-import { getPayload, PaginatedDocs } from 'payload';
-import { Accommodation } from '../../../../../payload-types';
+import { getPayload } from 'payload';
+// import { Accommodation } from '../../../../../payload-types';
 import payloadConfig from '@payload-config';
 import { NextResponse } from 'next/server';
 

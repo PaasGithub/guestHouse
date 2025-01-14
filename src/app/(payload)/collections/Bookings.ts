@@ -1,6 +1,7 @@
 
 import { CollectionConfig } from 'payload';
 import CalendarComponent from '../components/BookingCalendarView';
+import BookingAdminView from '../components/BookingToggleButton';
 // import React from 'react';
 
 // const CalComponent = React.lazy(() => import('../components/BookingCalendarView'));
@@ -162,8 +163,8 @@ const Booking: CollectionConfig = {
  ],
  admin: {
     components: {
-      beforeList: CalendarComponent,
-      // beforeList: CalComponent,
+      // beforeList: CalendarComponent,
+      beforeList: BookingAdminView,
     },
     defaultColumns: [
       'guestInfo',

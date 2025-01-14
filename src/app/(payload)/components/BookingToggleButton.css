@@ -1,0 +1,152 @@
+/* 
+.toggle-slider {
+display: flex;
+position: relative;
+width: 300px;
+margin: 0 auto 20px auto;
+background: #f0f0f0;
+border-radius: 25px;
+overflow: hidden;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-option {
+flex: 1;
+padding: 10px 20px;
+text-align: center;
+cursor: pointer;
+background: none;
+border: none;
+font-size: 14px;
+font-weight: bold;
+color: #555;
+z-index: 1;
+position: relative;
+transition: color 0.3s ease;
+}
+
+.toggle-option.active {
+color: white;
+}
+
+.slider-indicator {
+position: absolute;
+top: 0;
+bottom: 0;
+width: 50%;
+background: #007bff; 
+border-radius: 25px;
+transition: transform 0.3s ease;
+}
+
+.slider-indicator.left {
+transform: translateX(0%);
+}
+
+.slider-indicator.right {
+transform: translateX(100%);
+} */
+
+.toggle-slider {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    background-color: #f0f0f0;
+    border-radius: 30px;
+    padding: 4px;
+    width: 280px;
+    height: 40px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+  }
+  
+  .toggle-option {
+    flex: 1;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+    text-align: center;
+
+  }
+  
+  .toggle-option.active {
+    color: #fff;
+  }
+  
+  .toggle-option:focus {
+    outline: none;
+  }
+  
+  .slider-indicator {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background-color: #007bff;
+    border-radius: 26px;
+    transition: transform 0.3s ease;
+  }
+  
+  .slider-indicator.right {
+    transform: translateX(100%);
+  }
+  
+  .slider-indicator.left {
+    transform: translateX(0);
+  }
+  
+  /* Hover effects */
+  .toggle-option:hover:not(.active) {
+    color: #444;
+  }
+  
+  /* Optional: Add a subtle animation when clicking */
+  .toggle-option:active {
+    transform: scale(0.97);
+  }
+
+  
+.roomChecker-checker {
+padding: 16px;
+background: #f9f9f9;
+border: 1px solid #ddd;
+border-radius: 8px;
+}
+
+.roomChecker-checker h3 {
+margin-bottom: 16px;
+}
+
+.roomChecker-checker form label {
+display: block;
+margin-bottom: 8px;
+}
+
+.roomChecker-checker form input {
+margin-bottom: 16px;
+width: 100%;
+padding: 8px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.roomChecker-checker form button {
+background: #007bff;
+color: white;
+border: none;
+padding: 10px 16px;
+cursor: pointer;
+border-radius: 4px;
+}
+
+.roomChecker-checker form button:hover {
+background: #0056b3;
+}

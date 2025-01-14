@@ -25,7 +25,7 @@ interface Accommodation {
   
   useEffect(() => {
     const fetchAccommodations = async () => {
-      const response = await fetch('/api/accommodations');
+      const response = await fetch('/api/getAccommodations');
       console.log(response);
       const data = await response.json();
       setAccommodations(data.docs);

@@ -90,7 +90,7 @@ const BookingPage = () => {
   
     useEffect(() => {
         const fetchAccommodations = async () => {
-        const response = await fetch('/api/accommodations');
+        const response = await fetch('/api/getAccommodations');
         const data = await response.json();
         setAccommodations(data.docs);
         };

@@ -18,61 +18,94 @@ interface Booking {
   };
 }
 
-export async function GET() {
+// Helper to calculate date range
+function getDateRange(start: string, end: string): string[] {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const dates: string[] = [];
 
-  // console.log("Calendar route reached!!")
+  while (startDate < endDate) {
+    startDate.setDate(startDate.getDate() + 1); // Increment by 1 day
+    if (startDate < endDate) {
+      dates.push(startDate.toISOString().split('T')[0]);
+    }
+  }
+
+  return dates;
+}
+
+export async function GET() {
   try {
     const payload = await getPayload({ config: payloadConfig });
 
     // Fetch bookings from Payload CMS
     const bookings = await payload.find({
       collection: 'bookings',
-    })
-
-    // console.log(payload);
-
-    // console.log(bookings);
+    });
 
     // Transform bookings into calendar events
     const events: CalendarEvent[] = bookings.docs.flatMap((booking: Booking) => {
       const { bookingType, accommodation, event } = booking;
-    
-      if ((bookingType === 'accommodation') && accommodation?.checkIn) {
-        const checkInEvent: CalendarEvent = {
-          date: accommodation.checkIn,
-          color: 'orange',
-        };
-        const checkOutEvent: CalendarEvent | null = accommodation.checkOut ? {
-          date: accommodation.checkOut,
-          color: 'orange',
-        } : null;
-        return [checkInEvent, checkOutEvent].filter(Boolean) as CalendarEvent[];
-      }
-    
+
+      const eventList: CalendarEvent[] = [];
+
+      // if (bookingType === 'accommodation' && accommodation?.checkIn) {
+      //   const checkInEvent: CalendarEvent = {
+      //     date: accommodation.checkIn,
+      //     color: 'orange',
+      //   };
+      //   eventList.push(checkInEvent);
+
+      //   if (accommodation.checkOut) {
+      //     const checkOutEvent: CalendarEvent = {
+      //       date: accommodation.checkOut,
+      //       color: 'orange',
+      //     };
+      //     eventList.push(checkOutEvent);
+
+      //     // Add faded dates in-between
+      //     const fadedDates = getDateRange(accommodation.checkIn, accommodation.checkOut);
+      //     fadedDates.forEach((date) => {
+      //       eventList.push({ date, color: 'faded-orange' });
+      //     });
+      //   }
+      // }
+
       if (bookingType === 'event' && event?.eventDate) {
-        return [{
+        eventList.push({
           date: event.eventDate,
           color: 'blue',
-        }];
+        });
       }
 
-      if (bookingType === 'combined' && accommodation?.checkIn && event?.eventDate){
+      if (bookingType === 'combined' && accommodation?.checkIn && event?.eventDate) {
         const checkInEvent: CalendarEvent = {
           date: accommodation.checkIn,
           color: 'combine',
         };
-        const checkOutEvent: CalendarEvent | null = accommodation.checkOut ? {
-          date: accommodation.checkOut,
-          color: 'combine',
-        } : null;
-        const event_Date: CalendarEvent | null = event.eventDate ? {
+        // eventList.push(checkInEvent);
+
+        if (accommodation.checkOut) {
+          const checkOutEvent: CalendarEvent = {
+            date: accommodation.checkOut,
+            color: 'combine',
+          };
+          // eventList.push(checkOutEvent);
+
+          // Add faded dates in-between
+          const fadedDates = getDateRange(accommodation.checkIn, accommodation.checkOut);
+          // fadedDates.forEach((date) => {
+          //   eventList.push({ date, color: 'faded-combine' });
+          // });
+        }
+
+        eventList.push({
           date: event.eventDate,
-          color: 'combine',
-        } : null;
-        return [checkInEvent, checkOutEvent, event_Date].filter(Boolean) as CalendarEvent[];
+          color: 'blue',
+        });
       }
-    
-      return [];
+
+      return eventList;
     });
 
     // Respond with the formatted events
@@ -80,8 +113,5 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching calendar data:', error);
     return NextResponse.json({ error: 'Failed to fetch calendar data' }, { status: 500 });
-
   }
-
-
-};
+}

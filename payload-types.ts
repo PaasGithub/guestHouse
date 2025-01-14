@@ -122,6 +122,7 @@ export interface Accommodation {
       }[]
     | null;
   price: number;
+  totalUnitsAvailable: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -306,6 +307,7 @@ export interface AccommodationsSelect<T extends boolean = true> {
         id?: T;
       };
   price?: T;
+  totalUnitsAvailable?: T;
   updatedAt?: T;
   createdAt?: T;
 }
