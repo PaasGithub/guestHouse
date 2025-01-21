@@ -201,6 +201,8 @@ background-color: #e6e6e6;
 .calendar-event-blue {
   background-color: blue;
   color: white;
+  border-radius: 5px;
+  padding: 5px;
 }
 .calendar-event-combine  {
   background: linear-gradient(to bottom, orange, blue);

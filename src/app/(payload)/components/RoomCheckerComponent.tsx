@@ -1,30 +1,101 @@
 'use client';
 import { useState } from "react";
-
 const RoomCheckerComponent: React.FC = () => {
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
-    const [availableRooms, setAvailableRooms] = useState([]);
+    const [availableRooms, setAvailableRooms] =  useState<Accommodation[]>([]);
+
+    // const checkAvailability = async () => {
+    //     try {
+    //         //   const { data: accommodations, error } = await payload.client.fetch('/api/accommodations', {
+    //         //     method: 'GET',
+    //         //   });
+    //         const response = await fetch('/api/getAccommodations');
+    //         const data = await response.json();
+    //         const accommodations = data.docs;
+        
+    //         const available = accommodations.filter((accommodation: any) => {
+    //             // Logic to check availability using bookings or availability data
+    //             return true; // Replace with your actual availability checking logic
+    //         });
+        
+    //         setAvailableRooms(available);
+    //     } catch (err) {
+    //         console.error('Error checking availability:', err);
+    //     }
+    // };
+
+    interface Accommodation {
+        id: string;
+        name: string;
+        totalUnitsAvailable: number;
+    }
+    
+    // interface Booking {
+    //     accommodation_room_id: string; // Accommodation ID
+    //     accommodation_check_out: string; // Date string
+    //     accommodation_check_in: string; // Date string
+    //     status: 'pending' | 'confirmed' | 'cancelled';
+    // }
+    
+    interface Booking {
+        bookingType: string;
+        accommodation: {
+            room: {id: string}; // Accommodation ID
+            checkIn: string; // Date string
+            checkOut: string; // Date string
+        };
+        status: 'pending' | 'confirmed' | 'cancelled';
+    }
 
     const checkAvailability = async () => {
+        if (!checkIn || !checkOut) {
+            alert("Please select both check-in and check-out dates.");
+            return;
+        }
+    
         try {
-            //   const { data: accommodations, error } = await payload.client.fetch('/api/accommodations', {
-            //     method: 'GET',
-            //   });
-            const response = await fetch('/api/getAccommodations');
-            const data = await response.json();
-            const accommodations = data.docs;
-        
-            const available = accommodations.filter((accommodation: any) => {
-                // Logic to check availability using bookings or availability data
-                return true; // Replace with your actual availability checking logic
+            // Fetch accommodations
+            const accommodationsResponse = await fetch('/api/getAccommodations');
+            const { docs: accommodations }: { docs: Accommodation[] } = await accommodationsResponse.json();
+            
+    
+            // Fetch bookings
+            const bookingsResponse = await fetch('/api/getBookings');
+            const { docs: bookings }: { docs: Booking[] } = await bookingsResponse.json();
+    
+            const checkInDate = new Date(checkIn);
+            const checkOutDate = new Date(checkOut);
+    
+            const available = accommodations.filter((accommodation) => {
+                // console.log(`Accommodation: ${accommodation.totalUnitsAvailable}`);
+                const totalUnits = accommodation.totalUnitsAvailable;
+    
+                // Filter bookings for this accommodation
+                const accommodationBookings = bookings.filter(
+                    (booking) =>
+                        // console.log(`booking check in/: ${booking.accommodation.room.id}`),
+                        booking.bookingType == "accommodation" && booking.accommodation.room.id === accommodation.id &&
+                        booking.status !== 'cancelled' &&
+                        new Date(booking.accommodation.checkIn) < checkOutDate &&
+                        new Date(booking.accommodation.checkOut) > checkInDate
+                );
+    
+                // Calculate units left
+                const unitsLeft = totalUnits - accommodationBookings.length;
+                // console.log(`Accommodation Bookings length: ${accommodationBookings.length}`);
+                // console.log(`Units left for room ${accommodation.id}: ${unitsLeft} from ${checkInDate} to ${checkOutDate}`);
+    
+                return unitsLeft > 0;
             });
-        
+    
             setAvailableRooms(available);
+            console.log(available);
         } catch (err) {
             console.error('Error checking availability:', err);
         }
     };
+    
     
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',gap: '20px', margin: '30px'}}>

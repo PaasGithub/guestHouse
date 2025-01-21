@@ -16,7 +16,7 @@ export async function GET() {
     try {
         const payload = await getPayload({ config: payloadConfig });
     
-        // Fetch bookings from Payload CMS
+        // Fetch accommodations from Payload CMS
         const accommodations = await payload.find({
           collection: 'accommodations',
         });

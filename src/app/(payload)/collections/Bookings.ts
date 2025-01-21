@@ -1,6 +1,5 @@
 
 import { CollectionConfig } from 'payload';
-import CalendarComponent from '../components/BookingCalendarView';
 import BookingAdminView from '../components/BookingToggleButton';
 // import React from 'react';
 
@@ -162,10 +161,10 @@ const Booking: CollectionConfig = {
    }
  ],
  admin: {
-    components: {
-      // beforeList: CalendarComponent,
-      beforeList: BookingAdminView,
-    },
+    // components: {
+    //   // beforeList: CalendarComponent,
+    //   beforeList: BookingAdminView,
+    // },
     defaultColumns: [
       'guestInfo',
       'bookingType',
