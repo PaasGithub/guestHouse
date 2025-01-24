@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Calendar as CalendarIcon } from 'lucide-react';
 // import {accommodations} from '../../lib/data'
 import { useSearchParams } from 'next/navigation'
@@ -17,9 +17,17 @@ interface Accommodation {
     price: number;
 }
 
+const BookingPageWrapper = () => {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <BookingPage />
+      </Suspense>
+    );
+};
+
 const BookingPage = () => {
     const searchParams = useSearchParams()
-    const selectedRoomId = searchParams.get('roomType')
+    const selectedRoomId = searchParams?.get('roomType') || '1';
     // console.log("selectedRoomId: ", selectedRoomId)
     
 
@@ -32,7 +40,7 @@ const BookingPage = () => {
     // console.log("guestName: ", guestName)
     const [guestEmail, setGuestEmail] = useState('');
     const [guestPhone, setGuestPhone] = useState('');
-    const [roomType, setRoomType] = useState(selectedRoomId || '1');
+    const [roomType, setRoomType] = useState(selectedRoomId);
     // console.log("setRoomType: ", roomType);
     const [eventDate, setEventDate] = useState('');
     const [startTime, setStartTime] = useState('');
@@ -638,4 +646,4 @@ const BookingPage = () => {
     );
 };
 
-export default BookingPage;
+export default BookingPageWrapper;
