@@ -1,5 +1,5 @@
 'use client';
-import { DashboardAccommodation, Booking } from "@/app/types/dashboard";
+import { Booking } from "@/app/types/dashboard";
 import { useState } from "react";
 import {   Accommodation } from "../../../../payload-types";
 import { NextResponse } from "next/server";
