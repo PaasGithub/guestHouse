@@ -98,67 +98,114 @@ const RoomCheckerComponent: React.FC = () => {
     
     
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',gap: '20px', margin: '30px'}}>
+        // <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',gap: '20px', margin: '30px'}}>
 
-            <div style={{ display: 'flex',  flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '20px', width: '100%', }}>
+        //     <div style={{ display: 'flex',  flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '20px', width: '100%', }}>
 
-                <div style={{flex: '1 1 150px', minWidth: '150px'  }}>
-                    <label style={{ 
-                        display: 'block', 
-                        marginBottom: '5px', 
-                        fontWeight: 'bold' 
-                    }}>
-                        Check-In Date:
-                    </label>
-                    <input
-                        type="date"
-                        value={checkIn}
-                        onChange={(e) => setCheckIn(e.target.value)}
-                        style={{width: '100%', padding: '10px'}}
-                    />
-                </div>
+        //         <div style={{flex: '1 1 150px', minWidth: '150px'  }}>
+        //             <label style={{ 
+        //                 display: 'block', 
+        //                 marginBottom: '5px', 
+        //                 fontWeight: 'bold' 
+        //             }}>
+        //                 Check-In Date:
+        //             </label>
+        //             <input
+        //                 type="date"
+        //                 value={checkIn}
+        //                 onChange={(e) => setCheckIn(e.target.value)}
+        //                 style={{width: '100%', padding: '10px'}}
+        //             />
+        //         </div>
 
-                <div style={{flex: '1 1 150px', minWidth: '150px' }}>
-                    <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-                        Check-Out Date: 
-                    </label>
-                    <input
-                        type="date"
-                        value={checkOut}
-                        onChange={(e) => setCheckOut(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded"
-                        style={{width: '100%', padding: '10px'}}
-                    />
-                </div>
+        //         <div style={{flex: '1 1 150px', minWidth: '150px' }}>
+        //             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+        //                 Check-Out Date: 
+        //             </label>
+        //             <input
+        //                 type="date"
+        //                 value={checkOut}
+        //                 onChange={(e) => setCheckOut(e.target.value)}
+        //                 className="w-full p-2 border border-gray-300 rounded"
+        //                 style={{width: '100%', padding: '10px'}}
+        //             />
+        //         </div>
 
-                <div style={{margin: '10px'}}>
-                    <button
-                        onClick={checkAvailability}
-                        style={{padding: '10px 20px', borderRadius: '5px', cursor: 'pointer'}}
-                    >
-                        Check Availability
-                    </button>
-                </div>
-            </div>
+        //         <div style={{margin: '10px'}}>
+        //             <button
+        //                 onClick={checkAvailability}
+        //                 style={{padding: '10px 20px', borderRadius: '5px', cursor: 'pointer'}}
+        //             >
+        //                 Check Availability
+        //             </button>
+        //         </div>
+        //     </div>
 
-            <div>
-                {availableRooms.length > 0 ? (
-                    <div className="mt-4">
-                    <h2 className="font-bold text-lg">Available Rooms:</h2>
-                    <ul className="space-y-2">
-                        {availableRooms.map((room: any) => (
-                        <li key={room.id} className="border p-2 rounded">
-                            <span className="font-semibold">{room.name}</span>
-                        </li>
-                        ))}
-                    </ul>
-                    </div>
-                ) : (
-                    <p className="mt-4 text-gray-500">No available rooms for the selected dates.</p>
-                )}
-            </div>
+        //     <div>
+        //         {availableRooms.length > 0 ? (
+        //             <div className="mt-4">
+        //             <h2 className="font-bold text-lg">Available Rooms:</h2>
+        //             <ul className="space-y-2">
+        //                 {availableRooms.map((room: any) => (
+        //                 <li key={room.id} className="border p-2 rounded">
+        //                     <span className="font-semibold">{room.name}</span>
+        //                 </li>
+        //                 ))}
+        //             </ul>
+        //             </div>
+        //         ) : (
+        //             <p className="mt-4 text-gray-500">No available rooms for the selected dates.</p>
+        //         )}
+        //     </div>
 
       
+        // </div>
+        <div className="flex flex-col items-center gap-5 m-7">
+            <div className="flex flex-col w-full max-w-md gap-4">
+            <div>
+                <label className="block mb-2 font-bold">Check-In Date:</label>
+                <input 
+                type="date" 
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+                />
+            </div>
+            <div>
+                <label className="block mb-2 font-bold">Check-Out Date:</label>
+                <input 
+                type="date" 
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+                />
+            </div>
+            <div className="flex justify-center">
+                <button 
+                onClick={checkAvailability}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                Check Availability
+                </button>
+            </div>
+            </div>
+
+            <div className="w-full max-w-md max-h-[300px] overflow-y-auto">
+            {availableRooms.length > 0 ? (
+                <div>
+                <h2 className="text-lg font-bold mb-2">Available Rooms:</h2>
+                <ul className="space-y-2">
+                    {availableRooms.map((room: any) => (
+                    <li key={room.id} className="border p-2 rounded">
+                        <span className="font-semibold">{room.name}</span>
+                    </li>
+                    ))}
+                </ul>
+                </div>
+            ) : (
+                <p className="text-gray-500">No available rooms for the selected dates.</p>
+            )}
+            </div>
         </div>
     );
 };

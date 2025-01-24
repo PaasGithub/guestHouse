@@ -23,6 +23,8 @@
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
+    "react-error-boundary": "^5.0.0",
+    "recharts": "^2.15.0",
     "sass": "^1.83.0",
     "sharp": "^0.33.5"
   },

@@ -1,6 +1,6 @@
 
 import { CollectionConfig } from 'payload';
-import BookingAdminView from '../components/BookingToggleButton';
+// import BookingAdminView from '../components/BookingToggleButton';
 // import React from 'react';
 
 // const CalComponent = React.lazy(() => import('../components/BookingCalendarView'));

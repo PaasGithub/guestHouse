@@ -1,39 +1,36 @@
 'use client'
+import { Accommodation } from '@/app/types/dashboard';
 import Image from 'next/image';
 // app/accommodations/page.tsx
 
 //  import {accommodations} from '../../lib/data'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
+import GetAccommodationsSkeleton from '../skeletons/getAccommodationsSkeleton'; 
 
-interface Accommodation {
-  id: string;
-  name: string;
-  description: string;
-  image: {
-    url: string;
-  };
-  features: {
-    feature: string;
-  }[];
-  price: number;
-}
 
  export default function AccommodationsPage() {
   const router = useRouter()
   const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     const fetchAccommodations = async () => {
-      const response = await fetch('/api/getAccommodations');
-      console.log(response);
-      const data = await response.json();
-      setAccommodations(data.docs);
+      try{
+        const response = await fetch('/api/getAccommodations');
+        console.log(response);
+        const data = await response.json();
+        setAccommodations(data.docs);
+      } catch(error) {
+        console.error('Error fetching accommodations:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchAccommodations();
   }, []);
 
-  return (
+  return isLoading ? <GetAccommodationsSkeleton/> : (
     <div className=" mx-auto px-4 py-6 min-h-screen bg-gray-50 text-black">
       <h1 className="text-3xl font-bold text-center my-8">Our Accommodations</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">

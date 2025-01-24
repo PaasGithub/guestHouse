@@ -1,9 +1,26 @@
-import type { AdminViewProps } from 'payload'
+'use client'
 
+import type { AdminViewProps } from 'payload'
 import { Gutter } from '@payloadcms/ui'
 import React from 'react'
 import BookingAdminView from './BookingToggleButton'
-import DashboardStats from './DashboardStats'
+import { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import DashboardStatsSkeleton from './DashboardStats/DashboardStatsSkeleton'
+import DashboardStats from './DashboardStats/DashboardStats'
+import BookingStatsGraphSkeleton from './BookingStats/BookingStatsGraphSkeleton'
+import BookingStats from './BookingStats/BookingStatsGraph'
+import BookingAdminViewSkeleton from './BookingAdminView/BookingAdminViewSkeleton'
+
+// Error Fallback Component
+function ErrorFallback({ error }: { error: Error }) {
+  return (
+    <div role="alert" className="bg-red-100 p-4 rounded">
+      <p>Something went wrong:</p>
+      <pre className="text-red-600">{error.message}</pre>
+    </div>
+  );
+}
 
 const CustomDashboard: React.FC<AdminViewProps> = ({
   initPageResult,
@@ -11,30 +28,35 @@ const CustomDashboard: React.FC<AdminViewProps> = ({
   searchParams,
 }) => {
   return (
- 
+    <div className="dashboard">
       <Gutter>
-       <h1>Admin Dashboard</h1>
-        <p>Welcome to the dashboard! You can add widgets or stats here.</p>
-        <div className="calendar-section">
-            <BookingAdminView />
-        </div>
-        {/* Example of aggregated data */}
-        <div>
-          <h2>Stats</h2>
-          <ul>
-            <li>Total Accommodations: 10</li>
-            <li>Total Bookings: 45</li>
-            <li>Pending Bookings: 5</li>
-          </ul>
-        </div>
+        <h1 className="my-4">Welcome</h1>
+        <div className="dashboardGrid">
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<DashboardStatsSkeleton />}>
+              <DashboardStats />
+            </Suspense>
+          </ErrorBoundary>
 
-        <div>
-            <DashboardStats/>
+          <div className="calendar-section">
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <Suspense fallback={<BookingAdminViewSkeleton />}>
+                <BookingAdminView />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+
+          <div className="mb-8">
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <Suspense fallback={<BookingStatsGraphSkeleton />}>
+                <BookingStats />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
         </div>
-        
       </Gutter>
- 
-  )
-}
+    </div>
+  );
+};
 
 export default CustomDashboard;
