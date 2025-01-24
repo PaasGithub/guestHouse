@@ -1,5 +1,5 @@
 'use client'
-import { Accommodation } from '@/app/types/dashboard';
+import { DashboardAccommodation } from '@/app/types/dashboard';
 import Image from 'next/image';
 // app/accommodations/page.tsx
 
@@ -11,7 +11,7 @@ import GetAccommodationsSkeleton from '../skeletons/getAccommodationsSkeleton';
 
  export default function AccommodationsPage() {
   const router = useRouter()
-  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
+  const [accommodations, setAccommodations] = useState<DashboardAccommodation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {

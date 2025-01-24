@@ -15,7 +15,7 @@ export interface BookingStatsType {
     monthlyRevenue: number[];
   }
 
-  export interface Accommodation {
+  export interface DashboardAccommodation {
     id: string;
     name: string;
     description: string;
@@ -32,7 +32,7 @@ export interface BookingStatsType {
 export interface Booking {
     bookingType: string;
     accommodation: {
-        room: {id: string}; // Accommodation ID
+        room: {id: number}; // Accommodation ID
         checkIn: string; // Date string
         checkOut: string; // Date string
     };

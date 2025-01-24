@@ -1,7 +1,7 @@
 'use client';
-import { Accommodation } from "@/app/types/dashboard";
+import { DashboardAccommodation, Booking } from "@/app/types/dashboard";
 import { useState } from "react";
-import { Booking } from "../../../../payload-types";
+import {   Accommodation } from "../../../../payload-types";
 import { NextResponse } from "next/server";
 const RoomCheckerComponent: React.FC = () => {
     const [checkIn, setCheckIn] = useState('');
@@ -36,7 +36,7 @@ const RoomCheckerComponent: React.FC = () => {
                     (booking) =>
                       booking.bookingType === 'accommodation' &&
                       booking.accommodation && // Ensure accommodation is defined
-                      booking.accommodation.room.id === accommodation.id &&
+                      booking.accommodation?.room.id === accommodation.id &&
                       booking.status !== 'cancelled' &&
                       new Date(booking.accommodation.checkIn) < checkOutDate &&
                       new Date(booking.accommodation.checkOut) > checkInDate
