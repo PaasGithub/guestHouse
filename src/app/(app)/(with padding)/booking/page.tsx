@@ -52,6 +52,7 @@ const BookingPage = () => {
             checkIn,
             checkOut,
             eventDate,
+            eventType,
             guestFirstName,
             guestLastName,
             guestEmail,

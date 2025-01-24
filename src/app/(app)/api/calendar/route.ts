@@ -79,21 +79,21 @@ export async function GET() {
       }
 
       if (bookingType === 'combined' && accommodation?.checkIn && event?.eventDate) {
-        const checkInEvent: CalendarEvent = {
-          date: accommodation.checkIn,
-          color: 'combine',
-        };
+        // const checkInEvent: CalendarEvent = {
+        //   date: accommodation.checkIn,
+        //   color: 'combine',
+        // };
         // eventList.push(checkInEvent);
 
         if (accommodation.checkOut) {
-          const checkOutEvent: CalendarEvent = {
-            date: accommodation.checkOut,
-            color: 'combine',
-          };
+          // const checkOutEvent: CalendarEvent = {
+          //   date: accommodation.checkOut,
+          //   color: 'combine',
+          // };
           // eventList.push(checkOutEvent);
 
           // Add faded dates in-between
-          const fadedDates = getDateRange(accommodation.checkIn, accommodation.checkOut);
+          // const fadedDates = getDateRange(accommodation.checkIn, accommodation.checkOut);
           // fadedDates.forEach((date) => {
           //   eventList.push({ date, color: 'faded-combine' });
           // });

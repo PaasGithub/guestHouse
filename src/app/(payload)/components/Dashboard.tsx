@@ -22,11 +22,7 @@ function ErrorFallback({ error }: { error: Error }) {
   );
 }
 
-const CustomDashboard: React.FC<AdminViewProps> = ({
-  initPageResult,
-  params,
-  searchParams,
-}) => {
+const CustomDashboard: React.FC<AdminViewProps> = ({}) => {
   return (
     <div className="dashboard">
       <Gutter>

@@ -26,4 +26,15 @@ export interface BookingStatsType {
       feature: string;
     }[];
     price: number;
+    totalUnitsAvailable: number;
   }
+ 
+interface Booking {
+    bookingType: string;
+    accommodation: {
+        room: {id: string}; // Accommodation ID
+        checkIn: string; // Date string
+        checkOut: string; // Date string
+    };
+    status: 'pending' | 'confirmed' | 'cancelled';
+}
