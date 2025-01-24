@@ -18,8 +18,10 @@ import GetAccommodationsSkeleton from '../skeletons/getAccommodationsSkeleton';
     const fetchAccommodations = async () => {
       try{
         const response = await fetch('/api/getAccommodations');
-        console.log(response);
+        // console.log(response);
         const data = await response.json();
+        // console.log("accommodation data: ");
+        // console.log(data);
         setAccommodations(data.docs);
       } catch(error) {
         console.error('Error fetching accommodations:', error);
