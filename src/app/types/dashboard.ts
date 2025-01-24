@@ -29,7 +29,7 @@ export interface BookingStatsType {
     totalUnitsAvailable: number;
   }
  
-interface Booking {
+export interface Booking {
     bookingType: string;
     accommodation: {
         room: {id: string}; // Accommodation ID

@@ -19,20 +19,20 @@ interface Booking {
 }
 
 // Helper to calculate date range
-function getDateRange(start: string, end: string): string[] {
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  const dates: string[] = [];
+// function getDateRange(start: string, end: string): string[] {
+//   const startDate = new Date(start);
+//   const endDate = new Date(end);
+//   const dates: string[] = [];
 
-  while (startDate < endDate) {
-    startDate.setDate(startDate.getDate() + 1); // Increment by 1 day
-    if (startDate < endDate) {
-      dates.push(startDate.toISOString().split('T')[0]);
-    }
-  }
+//   while (startDate < endDate) {
+//     startDate.setDate(startDate.getDate() + 1); // Increment by 1 day
+//     if (startDate < endDate) {
+//       dates.push(startDate.toISOString().split('T')[0]);
+//     }
+//   }
 
-  return dates;
-}
+//   return dates;
+// }
 
 export async function GET() {
   try {

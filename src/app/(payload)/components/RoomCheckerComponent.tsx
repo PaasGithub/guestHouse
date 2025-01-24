@@ -157,7 +157,7 @@ const RoomCheckerComponent: React.FC = () => {
                 <div>
                 <h2 className="text-lg font-bold mb-2">Available Rooms:</h2>
                 <ul className="space-y-2">
-                    {availableRooms.map((room: any) => (
+                    {availableRooms.map((room) => (
                     <li key={room.id} className="border p-2 rounded">
                         <span className="font-semibold">{room.name}</span>
                     </li>
