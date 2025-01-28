@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import BookingForms from '../../components/BookingForms';
 // import { Calendar as CalendarIcon } from 'lucide-react';
@@ -44,7 +44,9 @@ const BookingPage = () => {
                 </div>
 
                 <ToastContainer/>
-                <BookingForms BookingType={bookingType}/>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <BookingForms BookingType={bookingType} />
+                </Suspense>
                 
                 
 
