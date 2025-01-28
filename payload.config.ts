@@ -5,6 +5,7 @@ import { buildConfig } from 'payload'
 import Accommodation from '@/app/(payload)/collections/Accomodations';
 import { Media } from '@/app/(payload)/collections/Media';
 import Booking from '@/app/(payload)/collections/Bookings';
+import Messages from '@/app/(payload)/collections/Messages';
 
 export default buildConfig({
   // If you'd like to use Rich Text, pass your editor here
@@ -23,6 +24,7 @@ export default buildConfig({
     Media,
     Accommodation,
     Booking,
+    Messages
   ],
   // Your Payload secret - should be a complex and secure string, unguessable
   secret: process.env.PAYLOAD_SECRET || '',

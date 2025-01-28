@@ -1,7 +1,13 @@
 @font-face {
-    font-family: 'Great Vibes';
+    font-family: 'GreatVibes';
     src: url('/fonts/GreatVibes-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-  }
-  
+}
+
+@font-face {
+  font-family: 'Marcellus';
+  src: url('/fonts/Marcellus-Regular.ttf') format('truetype'); 
+  font-weight: normal; 
+  font-style: normal; 
+}

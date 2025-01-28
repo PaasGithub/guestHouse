@@ -13,16 +13,15 @@ export async function POST(req: Request) {
   // console.log("booking: ", booking);
   // console.log("booking: ", booking.bookingType=='accommodation');
 
-  let booking;
-  const contentType = req.headers.get('content-type');
-
   try {
-    if (contentType?.includes('multipart/form-data')) {
-        const formData = await req.formData();
-        booking = JSON.parse(formData.get('_payload') as string);
-    } else {
-        booking = await req.json();
-    }
+    // if (contentType?.includes('multipart/form-data')) {
+    //     const formData = await req.formData();
+    //     booking = JSON.parse(formData.get('_payload') as string);
+    // } else {
+    //     booking = await req.json();
+    // }
+
+    const booking = await req.json();
 
     const bookingData = {
       booking_type: booking.bookingType,
@@ -47,7 +46,7 @@ export async function POST(req: Request) {
       // console.log("booking type is accommodation");
       // Check availability
       const availability = await checkRoomAvailability(bookingData.accommodation_room_id, bookingData.accommodation_check_in, bookingData.accommodation_check_out)
-      console.log("availability: ", availability)
+      // console.log("availability: ", availability)
 
       if (!availability) {
       //   return Response.json({ error: 'Room not available for selected dates' })
@@ -95,11 +94,11 @@ export async function POST(req: Request) {
 
      // event 
     if(bookingData.booking_type == 'event'){
-      console.log("booking: ",bookingData)
+      // console.log("booking: ",bookingData)
 
       // Check availability
       const availability = await checkEventAvailability(bookingData.event_date)
-      console.log("availability: ", availability)
+      // console.log("availability: ", availability)
 
       if (!availability) {
       //   return Response.json({ error: 'Room not available for selected dates' })
@@ -147,7 +146,7 @@ export async function POST(req: Request) {
     if(booking.bookingType == 'combined'){
       // Check event availability
       const eventAvailability = await checkEventAvailability(bookingData.event_date)
-      console.log("eventAvailability: ", eventAvailability)
+      // console.log("eventAvailability: ", eventAvailability)
 
       if (!eventAvailability) {
       //   return Response.json({ error: 'Room not available for selected dates' })
@@ -159,7 +158,7 @@ export async function POST(req: Request) {
 
       // Check room availability
       const roomAvailability = await checkRoomAvailability(bookingData.accommodation_room_id, bookingData.accommodation_check_in, bookingData.accommodation_check_out)
-      console.log("roomAvailability: ", roomAvailability)
+      // console.log("roomAvailability: ", roomAvailability)
 
       if (!roomAvailability) {
       //   return Response.json({ error: 'Room not available for selected dates' })
@@ -216,7 +215,7 @@ export async function POST(req: Request) {
 }
 
 async function checkRoomAvailability(roomId: number, checkIn: Date, checkOut: Date) {
-  console.log('Checking availability: ', 'roomid: ',roomId, 'checkin: ',checkIn, 'checkout: ',checkOut);
+  // console.log('Checking availability: ', 'roomid: ',roomId, 'checkin: ',checkIn, 'checkout: ',checkOut);
 
   // Fetch accommodation details
   const { data: accommodation, error: accommodationError } = await supabase
@@ -247,7 +246,7 @@ async function checkRoomAvailability(roomId: number, checkIn: Date, checkOut: Da
 
   // Calculate units left
   const unitsLeft = accommodation.total_units_available - (overlappingBookings?.length || 0);
-  console.log(`Units available for room ${roomId}: `, unitsLeft);
+  // console.log(`Units available for room ${roomId}: `, unitsLeft);
   
   // console.log("available: ", existingBookings)
   // return existingBookings.length === 0
@@ -267,6 +266,6 @@ async function checkEventAvailability(eventDate: Date) {
     throw new Error('Failed to check availability')
   }
  
-  console.log("availabel: ", existingBookings)
+  // console.log("availabel: ", existingBookings)
   return existingBookings.length === 0
 }

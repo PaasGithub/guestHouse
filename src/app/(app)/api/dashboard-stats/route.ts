@@ -198,8 +198,8 @@ async function getMonthlyRevenue() {
 
       // console.log("price: " + price);
       monthlyRevenue[monthIndex] += price;
-      console.log("sibgle monthlyrevenue: ");
-      console.log(monthlyRevenue);
+      // console.log("sibgle monthlyrevenue: ");
+      // console.log(monthlyRevenue);
     }catch(error){
       console.log("error get price:");
       console.log(error);
@@ -207,8 +207,8 @@ async function getMonthlyRevenue() {
 
   });
 
-  console.log("monthly revenue: ");
-  console.log(monthlyRevenue);
+  // console.log("monthly revenue: ");
+  // console.log(monthlyRevenue);
 
   return monthlyRevenue;
 }
