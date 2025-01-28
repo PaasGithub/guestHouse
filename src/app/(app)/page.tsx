@@ -23,6 +23,7 @@ const HomePage = () => {
         // Log each room's details
         accommodations.forEach((room) => {
           console.log(room.name, '-', room.totalUnitsAvailable);
+          console.log(room.name, '-', room.image.url);
         });
   
         // Log the total number of accommodations
