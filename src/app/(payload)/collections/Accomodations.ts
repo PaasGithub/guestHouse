@@ -43,6 +43,7 @@ const Accommodation: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: [
+      'id',
       'name', 
       'description', 
       'price', 

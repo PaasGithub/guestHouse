@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useAccommodations } from "../hooks/useAccommodations";
+import { BookingData } from "@/app/types/APItypes";
 
 
 interface BookingFormProps {
@@ -12,7 +13,7 @@ interface BookingFormProps {
 const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
     // for selected accommodation from url
     const searchParams = useSearchParams()
-    const selectedRoomId = searchParams?.get('roomType') || '1';
+    // const selectedRoomId = searchParams?.get('roomType') || '1';
 
     // get accommodations fro dropdowns
     const { accommodations, isLoading } = useAccommodations();
@@ -21,10 +22,18 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (isLoading) {
-            console.log("Accommodations Loading!");
+        if (!isLoading && accommodations?.length > 0) {
+            const roomFromUrl = searchParams?.get('roomType');
+            // console.log(accommodations[0].id);
+            setFormData(prev => ({
+              ...prev,
+              roomType: roomFromUrl || accommodations[0].id
+            }));
+            
         }
-    }, [accommodations, isLoading]);
+        
+        
+    }, [accommodations, isLoading, searchParams]);
 
     useEffect(() => {
         setFormData(prev => ({
@@ -35,9 +44,9 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
 
 
     // form data
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<BookingData>({
         bookingType: BookingType,
-        roomType: selectedRoomId,
+        roomType: '',
         checkIn: '',
         checkOut: '',
         eventDate: '',
@@ -51,12 +60,29 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
         eventGuests: 1,
         startTime: '',
         endTime: '',
-    })
+        services: {},
+    });
+
+    // useEffect(() => {
+    //     console.log(formData);
+    //   }, [formData]);
+      
 
     // function to handle changes to form fields
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleServiceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = event.target;
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          services: {
+            ...prevFormData.services,
+            [name]: checked, // Set true if checked, false if unchecked
+          },
+        }));
     };
 
     // function for handling submit 
@@ -78,7 +104,7 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                 toast.success('Booking Successful');
                 setFormData({
                     bookingType: BookingType,
-                    roomType: selectedRoomId,
+                    roomType: '',
                     checkIn: '',
                     checkOut: '',
                     eventDate: '',
@@ -92,6 +118,7 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                     eventGuests: 1,
                     startTime: '',
                     endTime: '',
+                    services: {}
                 });
             } else {
                 toast.error(data.error || 'Something went wrong. Please try again later.');
@@ -328,21 +355,21 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                             </div>
 
                             <div>
-                            <label className="block text-sm font-medium ">Additional Services Needed</label>
-                            <div className="mt-2 space-y-2">
-                                <div className="flex items-center">
-                                <input type="checkbox" className="h-4 w-4 text-blue-600"/>
-                                <label className="ml-2 text-sm ">Catering</label>
+                                <label className="block text-sm font-medium ">Additional Services Needed</label>
+                                <div className="mt-2 space-y-2">
+                                    {['Catering', 'Decoration', 'SoundSystem'].map((service) => (
+                                    <div key={service} className="flex items-center">
+                                        <input
+                                        type="checkbox"
+                                        name={service} // Use service name as key
+                                        className="h-4 w-4 text-blue-600"
+                                        checked={formData.services[service] || false}
+                                        onChange={handleServiceChange}
+                                        />
+                                        <label className="ml-2 text-sm">{service}</label>
+                                    </div>
+                                    ))}
                                 </div>
-                                <div className="flex items-center">
-                                <input type="checkbox" className="h-4 w-4 text-blue-600"/>
-                                <label className="ml-2 text-sm ">Decoration</label>
-                                </div>
-                                <div className="flex items-center">
-                                <input type="checkbox" className="h-4 w-4 text-blue-600"/>
-                                <label className="ml-2 text-sm ">Sound System</label>
-                                </div>
-                            </div>
                             </div>
 
                             {/* Guest Information */}
@@ -559,19 +586,19 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                             <div>
                                 <label className="block text-sm font-medium ">Additional Services Needed</label>
                                 <div className="mt-2 space-y-2">
-                                    <div className="flex items-center">
-                                    <input type="checkbox" className="h-4 w-4 text-blue-600"/>
-                                    <label className="ml-2 text-sm ">Catering</label>
+                                    {['Catering', 'Decoration', 'SoundSystem'].map((service) => (
+                                    <div key={service} className="flex items-center">
+                                        <input
+                                        type="checkbox"
+                                        name={service} // Use service name as key
+                                        className="h-4 w-4 text-blue-600"
+                                        checked={formData.services[service] || false}
+                                        onChange={handleServiceChange}
+                                        />
+                                        <label className="ml-2 text-sm">{service}</label>
                                     </div>
-                                    <div className="flex items-center">
-                                    <input type="checkbox" className="h-4 w-4 text-blue-600"/>
-                                    <label className="ml-2 text-sm ">Decoration</label>
-                                    </div>
-                                    <div className="flex items-center">
-                                    <input type="checkbox" className="h-4 w-4 text-blue-600"/>
-                                    <label className="ml-2 text-sm ">Sound System</label>
-                                    </div>
-                                </div>          
+                                    ))}
+                                </div>        
                             </div>
                         
 

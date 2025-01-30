@@ -12,22 +12,20 @@ const HomePage = () => {
     const [ total , setTotal ] = useState(0);
 
     useEffect(() => {
-      if (isLoading) {
-        console.log('Loading');
+      if (!isLoading) {
         
-      } else {
         // Calculate the total number of available units
         const newTotal = accommodations.reduce((acc, room) => acc + room.totalUnitsAvailable, 0);
         setTotal(newTotal);
   
         // Log each room's details
-        accommodations.forEach((room) => {
-          console.log(room.name, '-', room.totalUnitsAvailable);
-          console.log(room.name, '-', room.image.url);
-        });
+        // accommodations.forEach((room) => {
+        //   console.log(room.name, '-', room.totalUnitsAvailable);
+        //   console.log(room.name, '-', room.image.url);
+        // });
   
         // Log the total number of accommodations
-        console.log("Total number of accommodations: " + newTotal);
+        // console.log("Total number of accommodations: " + newTotal);
       }
     }, [accommodations, isLoading]);
 
