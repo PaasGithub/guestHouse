@@ -24,7 +24,7 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
     useEffect(() => {
         if (!isLoading && accommodations?.length > 0) {
             const roomFromUrl = searchParams?.get('roomType');
-            // console.log(accommodations[0].id);
+            console.log(accommodations[0].id);
             setFormData(prev => ({
               ...prev,
               roomType: roomFromUrl || accommodations[0].id
@@ -63,9 +63,9 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
         services: {},
     });
 
-    // useEffect(() => {
-    //     console.log(formData);
-    //   }, [formData]);
+    useEffect(() => {
+        console.log(formData);
+      }, [formData]);
       
 
     // function to handle changes to form fields
@@ -104,7 +104,7 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                 toast.success('Booking Successful');
                 setFormData({
                     bookingType: BookingType,
-                    roomType: '',
+                    roomType: accommodations[0].id,
                     checkIn: '',
                     checkOut: '',
                     eventDate: '',
