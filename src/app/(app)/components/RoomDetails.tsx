@@ -3,14 +3,14 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Media } from '../../../../payload-types';
+import { Accommodation, Media } from '../../../../payload-types';
 
 
 function isMedia(image: number | Media): image is Media {
   return typeof image !== 'number' && 'url' in image;
 }
 
-export default function RoomDetails({ room }: { room: any }) {
+export default function RoomDetails({ room }: { room: Accommodation }) {
   const router = useRouter();
 
   return (
@@ -38,13 +38,13 @@ export default function RoomDetails({ room }: { room: any }) {
           {room.features && room.features.length > 0 && (
             <div className="space-y-2">
               <h2 className="text-xl font-bold">Features</h2>
-              <ul className="list-disc list-inside">
-                {room.features.map((feature: any, index: number) => (
-                  <li key={index} className="text-gray-600">
-                    {feature.feature}
-                  </li>
-                ))}
-              </ul>
+                <ul className="list-disc list-inside">
+                    {room.features.map((item: { feature?: string | null | undefined; id?: string | null | undefined }, index: number) => (
+                        <li key={index} className="text-gray-600">
+                        {item.feature}
+                        </li>
+                    ))}
+                </ul>
             </div>
           )}
           {/* Book Now Button */}

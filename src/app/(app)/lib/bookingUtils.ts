@@ -1,9 +1,6 @@
 import { BookingsLikeType } from "@/app/types/APItypes";
 import payloadConfig from "@payload-config";
 import { getPayload } from "payload";
-import { Accommodation } from "../../../../payload-types";
-import { useState } from "react";
-import { Booking } from "@/app/types/dashboard";
 
 const payload = await getPayload({ config: payloadConfig });
 

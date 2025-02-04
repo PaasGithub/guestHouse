@@ -4,8 +4,6 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useAccommodations } from "../hooks/useAccommodations";
 import { BookingData } from "@/app/types/APItypes";
-import { fetchAvailableRooms } from "../hooks/fetchAvailableAccommodations";
-import { Accommodation } from "../../../../payload-types";
 import AccommodationBookinForm from "./AccommodationBookingForm";
 
 
@@ -136,9 +134,7 @@ const BookingAcc: React.FC<BookingFormProps> = ({ BookingType }) => {
         }
     };
 
-    const [availableRooms, setAvailableRooms] = useState<
-    { accommodation: Accommodation; unitsLeft: number }[]
-  >([]);
+  
   
     
 

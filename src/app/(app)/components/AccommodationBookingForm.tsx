@@ -14,9 +14,7 @@ import { toast } from 'react-toastify';
 
 const AccommodationBookingForm: React.FC = () => {
   const [step, setStep] = useState<number>(1); // Track current step
-  const [checkIn, setCheckIn] = useState<string>('');
-  const [checkOut, setCheckOut] = useState<string>('');
-  const [guests, setGuests] = useState<number>(1);
+
   const [availableRooms, setAvailableRooms] = useState<
     { accommodation: Accommodation; unitsLeft: number }[]
   >([]);
