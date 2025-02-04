@@ -22,6 +22,9 @@ body {
   font-family: 'Marcellus', Arial, Helvetica, sans-serif;
 }
 
+.font-marcellus {
+  font-family: 'Marcellus', sans-serif;
+}
 .scroll-container {
   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
   scrollbar-width: none; /* Hide scrollbar for Firefox */

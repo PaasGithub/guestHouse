@@ -7,9 +7,14 @@ import { useAccommodations } from './hooks/useAccommodations';
 import CountUp from 'react-countup';
 import ContactUs from './components/ContactUs';
 import { ToastContainer } from 'react-toastify';
+import { Media } from '../../../payload-types';
 const HomePage = () => {
     const { accommodations, isLoading } = useAccommodations();
     const [ total , setTotal ] = useState(0);
+
+    function isMedia(image: number | Media): image is Media {
+      return typeof image !== 'number' && 'url' in image;
+    }
 
     useEffect(() => {
       if (!isLoading) {
@@ -87,7 +92,7 @@ const HomePage = () => {
         </section>
 
         {/* stats section*/}
-        <section className='relative h-[27rem]'>
+        <section className='relative h-[27rem] text-black dark:text-gray-100'>
 
           <div className="text-center my-[100px]">
             {/* Heading */}
@@ -208,7 +213,7 @@ const HomePage = () => {
                     className="flex-shrink-0 text-white overflow-hidden w-full md:w-[40rem]"
                   >
                     <img
-                      src={room.image.url}
+                      src={isMedia(room.image) && room.image.url ? room.image.url : '/idyllicHero.jpg'}
                       alt={room.name}
                       className="w-full object-cover shadow-lg"
                       style={{ height: '25rem' }}
@@ -232,7 +237,7 @@ const HomePage = () => {
         </section>
 
         {/* contact us section*/}
-        <section className="relative h-[70rem] md:h-[50rem] bg-gray-100 dark:bg-gray-900 py-16">
+        <section className="relative h-[70rem] md:h-[50rem] bg-gray-100 dark:bg-gray-900 py-16 text-black dark:text-gray-100">
           <div className="container mx-auto px-4">
             {/* Section Title */}
             <h2 className="text-4xl md:text-6xl font-bold text-center mb-12">

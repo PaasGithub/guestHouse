@@ -1,11 +1,14 @@
 import { BookingsLikeType } from "@/app/types/APItypes";
 import payloadConfig from "@payload-config";
 import { getPayload } from "payload";
+import { Accommodation } from "../../../../payload-types";
+import { useState } from "react";
+import { Booking } from "@/app/types/dashboard";
 
 const payload = await getPayload({ config: payloadConfig });
 
 
-export async function checkRoomAvailability(roomId: string, checkIn: Date, checkOut: Date): Promise<boolean> {
+export async function checkRoomAvailability(roomId: string | number, checkIn: Date, checkOut: Date): Promise<boolean> {
     try {
 
         // console.log("Checking room id: " + roomId);
@@ -134,4 +137,42 @@ export async function createBooking(bookingData: BookingsLikeType) {
         throw new Error('Failed to create booking');
         
       }
-    }
+}
+
+
+// export  async function fetchAvailableRooms(
+//     checkIn: string,
+//     checkOut: string
+//   ): Promise<Accommodation[]> {
+//     try {
+//         // const payload = await getPayload({ config: payloadConfig });
+
+//         // Fetch all accommodations
+//         const allAccommodations = await payload.find({
+//           collection: 'accommodations',
+//           limit: 1000, // Adjust the limit as needed
+//         });
+    
+//         if (!allAccommodations || !allAccommodations.docs) {
+//           throw new Error('No accommodations found');
+//         }
+    
+//         // Convert checkIn and checkOut strings to Date objects
+//         const checkInDate = new Date(checkIn);
+//         const checkOutDate = new Date(checkOut);
+    
+//         // Filter accommodations to find available rooms
+//         const availableRooms = await Promise.all(
+//           allAccommodations.docs.map(async (room: Accommodation) => {
+//             const isAvailable = await checkRoomAvailability(room.id, checkInDate, checkOutDate);
+//             return isAvailable ? room : null;
+//           })
+//         );
+    
+//         // Remove null values (rooms that are not available)
+//         return availableRooms.filter(room => room !== null) as Accommodation[];
+//       } catch (error) {
+//         console.error('Error fetching available rooms:', error);
+//         throw new Error('Failed to fetch available rooms');
+//       }
+//   };

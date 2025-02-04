@@ -38,12 +38,17 @@ const Accommodation: CollectionConfig = {
       name: 'totalUnitsAvailable',
       type: 'number',
       required: true,
+    },
+    {
+      name: 'totalNumberOfGuests',
+      type: 'number',
+      required: true,
     }
   ],
   admin: {
     useAsTitle: 'name',
     defaultColumns: [
-      'id',
+      // 'id',
       'name', 
       'description', 
       'price', 

@@ -125,6 +125,7 @@ export interface Accommodation {
     | null;
   price: number;
   totalUnitsAvailable: number;
+  totalNumberOfGuests: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -326,6 +327,7 @@ export interface AccommodationsSelect<T extends boolean = true> {
       };
   price?: T;
   totalUnitsAvailable?: T;
+  totalNumberOfGuests?: T;
   updatedAt?: T;
   createdAt?: T;
 }

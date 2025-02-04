@@ -17,6 +17,19 @@ export interface BookingData {
     services: Record<string, boolean>;
 }
 
+export interface AccommodationsBookingData {
+    bookingType: 'accommodation' | 'event' | 'combined' | string;
+    roomType: string ;
+    checkIn: string;
+    checkOut: string;
+    guestFirstName: string;
+    guestLastName: string;
+    guestEmail: string;
+    guestPhone: string;
+    specialRequests: string;
+    accommodationGuests: number | string;
+}
+
 export interface BookingsLikeType {
     bookingType: 'accommodation' | 'event' | 'combined' ;
     roomType: string;

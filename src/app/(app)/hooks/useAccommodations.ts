@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DashboardAccommodation } from '@/app/types/dashboard'; 
+import { Accommodation } from '../../../../payload-types';
 
 export const useAccommodations = () => {
-  const [accommodations, setAccommodations] = useState<DashboardAccommodation[]>([]);
+  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
     
   useEffect(() => {
@@ -26,11 +26,4 @@ export const useAccommodations = () => {
   return { accommodations, isLoading };
 };
 
-// export default async function getAccommodations(){
-//     let accomm: DashboardAccommodation | null = null;
-//     try{
-//         accomm = await fetchDoc<Accommodation>({
-//             collection: 'accommodations',
-//         })
-//     }catch (error){console.error(error)}
-// }
+
