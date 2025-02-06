@@ -9,8 +9,8 @@ export async function getRoom(id: string): Promise<Accommodation> {
         collection: 'accommodations',
         id: id
     });
-    console.log("Room data: ");
-    console.log(room);
+    // console.log("Room data: ");
+    // console.log(room);
     return room; 
 }
 

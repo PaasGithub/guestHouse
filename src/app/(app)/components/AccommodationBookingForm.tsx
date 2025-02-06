@@ -24,19 +24,55 @@ const AccommodationBookingForm: React.FC = () => {
 
   const handleCheckAvailability = async () => {
     setLoading(true);
-    const rooms = await fetchAvailableRooms(formData.checkIn, formData.checkOut);
-    setAvailableRooms(rooms);
-    setLoading(false);
-    setStep(2); // Move to step 2
+    try{
+      const rooms = await fetchAvailableRooms(formData.checkIn, formData.checkOut);
+      setAvailableRooms(rooms);
+      setLoading(false);
+      setStep(2); // Move to step 2
+    }catch(error){
+      setLoading(false);
+
+        // Check if the error is the specific "missing dates" error
+      if (error instanceof Error && error.message === 'MISSING_DATES') {
+          toast.error('Please select both check-in and check-out dates.'); // Custom message
+      } else {
+          toast.error('An error occurred. Please try again later.'); // Default message
+          console.error(error); // Log the error for debugging
+      }
+    }
   };
 
-  const handleSelectRoom = (room: string) => {
+  const handleSelectRoom = (room: Accommodation) => {
     // setSelectedRoom(room);
-    setFormData((prev) => ({ ...prev, 'roomType': room }));
+    // console.log("Room price:", room.price);
+    // console.log("Check in: ",formData.checkIn);
+    // console.log("Checkout: ", formData.checkOut);
+
+    const totalPriceOwed = calculatePrice(room.price, formData.checkIn, formData.checkOut);
+    const roomID = (room.id).toString();
+    setFormData((prev) => ({ ...prev, 'roomType': roomID, 'accommodationTotalPrice':  totalPriceOwed}));
     setStep(3); // Move to step 3
   };
 
+  const calculatePrice = (ppn: number, checkIn: string, checkOut: string) => {
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+
+    // calculate difference in milliesecnds 
+    const timeDifference = checkOutDate.getTime() - checkInDate.getTime()
+    
+    // Convert the time difference from milliseconds to days
+    const numOfNights = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+    const totalPrice = numOfNights * ppn; //ppn is price per night
+
+    // console.log("Total Price: ", totalPrice, " Nights: ", numOfNights);
+
+    return totalPrice;
+  }
+
   const handleBookRoom = async () => {
+    setLoading(true);
     try {
       const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -62,14 +98,18 @@ const AccommodationBookingForm: React.FC = () => {
           specialRequests: '',
           guestPhone: '',
           accommodationGuests: 1,
+          accommodationTotalPrice: 0,
         });
+        setLoading(false);
         setStep(1); // Optionally, reset to the first step
       } else {
         toast.error(data.error || 'Something went wrong. Please try again later.'); // Show error message
+        setLoading(false);
       }
     } catch (error) {
       toast.error('An error occurred. Please try again later.'); // Show error message
       console.error(error); // Log the error for debugging
+      setLoading(false);
     }
   };
 
@@ -91,6 +131,7 @@ const AccommodationBookingForm: React.FC = () => {
         specialRequests: '',
         guestPhone: '',
         accommodationGuests: 1,
+        accommodationTotalPrice: 0,
     });
 
     // function to handle changes to form fields
@@ -190,7 +231,7 @@ const AccommodationBookingForm: React.FC = () => {
                   Units Left: {room.unitsLeft}
                 </p>
                 <button
-                  onClick={() => handleSelectRoom((room.accommodation.id).toString())}
+                  onClick={() => handleSelectRoom((room.accommodation))}
                   className="w-full mt-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                 >
                   Select
@@ -266,7 +307,8 @@ const AccommodationBookingForm: React.FC = () => {
             />
             <button
               onClick={handleBookRoom}
-              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+              disabled={loading}
+              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
             >
               Book Now
             </button>

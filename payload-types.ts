@@ -141,6 +141,7 @@ export interface Booking {
     checkOut: string;
     room: number | Accommodation;
     guests?: number | null;
+    totalPrice: number;
   };
   event?: {
     eventType: 'Wedding' | 'Birthday Party' | 'Corporate Event' | 'Other';
@@ -344,6 +345,7 @@ export interface BookingsSelect<T extends boolean = true> {
         checkOut?: T;
         room?: T;
         guests?: T;
+        totalPrice?: T;
       };
   event?:
     | T

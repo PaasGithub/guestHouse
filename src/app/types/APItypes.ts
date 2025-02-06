@@ -28,6 +28,7 @@ export interface AccommodationsBookingData {
     guestPhone: string;
     specialRequests: string;
     accommodationGuests: number | string;
+    accommodationTotalPrice: number;
 }
 
 export interface BookingsLikeType {
@@ -35,6 +36,7 @@ export interface BookingsLikeType {
     roomType: string;
     checkIn: string;
     checkOut: string;
+    accommodationTotalPrice: number;
     eventDate: string;
     eventType: 'Wedding' | 'Birthday Party' | 'Corporate Event' | 'Other';
     guestFirstName: string;

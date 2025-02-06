@@ -68,6 +68,11 @@ const Booking: CollectionConfig = {
          type: 'number',
          min: 1,
          max: 4,
+       },
+       {
+        name: 'totalPrice',
+        type: 'number',
+        required: true,
        }
      ]
    },

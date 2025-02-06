@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getPayload } from 'payload';
 import payloadConfig from '@payload-config';
-import { Accommodation } from '../../../../../payload-types';
 
 const payload = await getPayload({ config: payloadConfig });
 // export async function GET() {
@@ -194,7 +193,8 @@ async function getMonthlyRevenue() {
 
       // Calculate revenue for this booking
       // const price = booking.accommodation?.room.price || 0;
-      const price = (booking.accommodation?.room as Accommodation)?.price || 0;
+      // const price = (booking.accommodation?.room as Accommodation)?.price || 0;
+      const price = booking.accommodation.totalPrice || 0;
 
       // console.log("price: " + price);
       monthlyRevenue[monthIndex] += price;

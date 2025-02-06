@@ -7,8 +7,10 @@ export async function fetchAvailableRooms(
     checkOut: Date | string
   ): Promise<{ accommodation: Accommodation; unitsLeft: number }[]> {
     if (!checkIn || !checkOut) {
-      alert("Please select both check-in and check-out dates.");
-      return []; // Return an empty array if input is invalid
+      // alert("Please select both check-in and check-out dates.");
+      // toast.error('Please select both check-in and check-out dates.');
+      throw new Error('MISSING_DATES');
+      
     }
   
     try {
@@ -28,7 +30,7 @@ export async function fetchAvailableRooms(
         return []; // Return an empty array if bookings data is missing
       }
 
-      console.log("Bookings: " , bookings);
+      // console.log("Bookings: " , bookings);
   
       const available = accommodations
         .map((accommodation) => {

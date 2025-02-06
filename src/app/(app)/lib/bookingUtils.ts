@@ -83,8 +83,8 @@ export async function createBooking(bookingData: BookingsLikeType) {
         //   method: 'POST',
         //   body: JSON.stringify(bookingData),
         // });
-        // console.log("booking data:");
-        // console.log(parseInt(bookingData?.roomType));
+        console.log("booking data:");
+        console.log((bookingData));
 
         const response = await payload.create({
             collection: "bookings",
@@ -97,6 +97,7 @@ export async function createBooking(bookingData: BookingsLikeType) {
                       checkOut: bookingData?.checkOut,
                       room: parseInt(bookingData?.roomType),
                       guests: parseInt(bookingData?.accommodationGuests),
+                      totalPrice: bookingData?.accommodationTotalPrice,
                     }
                   : undefined,
               event: 
