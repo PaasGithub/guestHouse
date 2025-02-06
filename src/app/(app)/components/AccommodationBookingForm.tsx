@@ -178,6 +178,7 @@ const AccommodationBookingForm: React.FC = () => {
                         min={new Date().toISOString().split('T')[0]}
                         onChange={handleChange}
                         className="w-full p-3 border rounded-lg dark:text-black appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                        placeholder='dd mm yyyy'
                     />
                 </div>
 
@@ -191,6 +192,7 @@ const AccommodationBookingForm: React.FC = () => {
                         min={formData.checkIn || new Date().toISOString().split('T')[0]}
                         onChange={handleChange}
                         className="w-full p-3 border rounded-lg dark:text-black appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                        placeholder='dd mm yyyy'
                     />
                 </div>
 
