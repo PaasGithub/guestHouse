@@ -35,7 +35,9 @@ const AccommodationBookingForm: React.FC = () => {
 
         // Check if the error is the specific "missing dates" error
       if (error instanceof Error && error.message === 'MISSING_DATES') {
-          toast.error('Please select both check-in and check-out dates.'); // Custom message
+        toast.error('Please select both check-in and check-out dates.');
+      } else if (error instanceof Error && error.message === 'IMPROPER_DATES'){
+        toast.error('Please select appropriate check-in and check-out dates.');
       } else {
           toast.error('An error occurred. Please try again later.'); // Default message
           console.error(error); // Log the error for debugging
@@ -103,14 +105,38 @@ const AccommodationBookingForm: React.FC = () => {
         });
         setLoading(false);
         setStep(1); // Optionally, reset to the first step
-      } else {
-        toast.error(data.error || 'Something went wrong. Please try again later.'); // Show error message
-        setLoading(false);
+      } 
+      else if (data.message === 'MISSING_ACCOMMODATION_INFO') {
+          toast.error('Missing required fields for accommodation booking.');
+      } else if (data.message === 'MISSING_EVENT_INFO'){
+          toast.error('Missing required fields for event booking.');
+      } else if (data.message === 'MISSING_GUEST_INFO'){
+          toast.error('Missing required guest information');
       }
-    } catch (error) {
-      toast.error('An error occurred. Please try again later.'); // Show error message
-      console.error(error); // Log the error for debugging
+      else {
+          toast.error('Something went wrong. Please try again later.');
+          console.log(data);
+      } 
+
+      // console.log("data: ");
+      // console.log(data);
+      // console.log(response);
       setLoading(false);
+      
+    } catch (error) {
+      
+      setLoading(false);
+
+      if (error instanceof Error && error.message === 'MISSING_ACCOMMODATION_INFO') {
+        toast.error('Missing required fields for accommodation booking.');
+      } else if (error instanceof Error && error.message === 'MISSING_EVENT_INFO'){
+        toast.error('Missing required fields for event booking.');
+      } else if (error instanceof Error && error.message === 'MISSING_GUEST_INFO'){
+        toast.error('Missing required guest information');
+      }else {
+          toast.error('An error occurred. Please try again later.'); // Default message
+          console.error(error); // Log the error for debugging
+      }
     }
   };
 
@@ -216,7 +242,11 @@ const AccommodationBookingForm: React.FC = () => {
                 disabled={loading}
                 className="w-full bg-primary text-white p-4 rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
                 >
-                {loading ? 'Checking...' : 'Check Availability'}
+                  {loading ? (
+                    <span className="loading-spinner"></span>
+                  ) : (
+                    "Check Availability"
+                  )}
                 </button>
             </div>
         )}
@@ -314,7 +344,11 @@ const AccommodationBookingForm: React.FC = () => {
               disabled={loading}
               className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
             >
-              Book Now
+              {loading ? (
+                <span className="loading-spinner"></span>
+              ) : (
+                "Book Now"
+              )}
             </button>
             <button
               onClick={handleBack}

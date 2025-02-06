@@ -11,6 +11,8 @@ export async function fetchAvailableRooms(
       // toast.error('Please select both check-in and check-out dates.');
       throw new Error('MISSING_DATES');
       
+    }else if (checkIn>checkOut ){
+      throw new Error('IMPROPER_DATES');
     }
   
     try {

@@ -7,18 +7,18 @@ function validateBookingData(booking: BookingData) {
 
   if (booking.bookingType === 'accommodation' || booking.bookingType === 'combined') {
     if (!booking?.roomType || !booking?.checkIn || !booking?.checkOut) {
-      throw new Error('Missing required fields for accommodation booking');
+      throw new Error('MISSING_ACCOMMODATION_INFO');
     }
   }
 
   if (booking.bookingType === 'event' || booking.bookingType === 'combined') {
     if (!booking?.eventDate || !booking?.startTime || !booking?.endTime) {
-      throw new Error('Missing required fields for event booking');
+      throw new Error('MISSING_EVENT_INFO');
     }
   }
 
   if (!booking?.guestFirstName || !booking?.guestLastName || !booking?.guestEmail) {
-    throw new Error('Missing required guest information');
+    throw new Error('MISSING_GUEST_INFO');
   }
 }
 
@@ -41,7 +41,7 @@ import { BookingData } from '@/app/types/APItypes';
 export async function POST(req: Request) {
   try {
     const booking = await req.json();
-    console.log(booking);
+    // console.log(booking);
     validateBookingData(booking);
 
     if (["accommodation", "combined"].includes(booking.bookingType)) {

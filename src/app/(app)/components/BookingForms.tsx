@@ -289,9 +289,9 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                             <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full bg-primary dark:bg-gray-700 text-white py-3 rounded-lg hover:bg-gray-600"
+                            className="w-full bg-primary dark:bg-gray-700 text-white py-3 rounded-lg hover:bg-gray-600 disabled:bg-blue-300"
                             >
-                                {isSubmitting ? <span className="loading-dots"/> : 'Book Now'}
+                                {isSubmitting ? <span className="loading-spinner"/> : 'Book Now'}
                             </button>
                         </form>
                     </div>
