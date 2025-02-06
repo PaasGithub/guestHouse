@@ -174,7 +174,7 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                                         value={formData.eventDate}
                                         min={new Date().toISOString().split('T')[0]}
                                         onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border dark:text-black border-gray-300 p-2"
+                                        className="mt-1 block w-full rounded-md border dark:text-black border-gray-300 p-2 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                                 
@@ -197,7 +197,7 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                                 <input 
                                     name="startTime"
                                     type="time" 
-                                    className="mt-1 block w-full rounded-md border dark:text-black border-gray-300 p-2"
+                                    className="mt-1 block w-full rounded-md border dark:text-black border-gray-300 p-2 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="Start Time"
                                     value={formData.startTime}
                                     onChange={handleChange}
@@ -205,7 +205,7 @@ const BookingForms: React.FC<BookingFormProps> = ({ BookingType }) => {
                                 <input 
                                     name="endTime"
                                     type="time" 
-                                    className="mt-1 block w-full rounded-md border dark:text-black border-gray-300 p-2" 
+                                    className="mt-1 block w-full rounded-md border dark:text-black border-gray-300 p-2 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" 
                                     placeholder="End Time"
                                     value={formData.endTime}
                                     onChange={handleChange}
