@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 // }
 
 const AccommodationBookingForm: React.FC = () => {
+  const today = new Date().toISOString().split('T')[0]
   const [step, setStep] = useState<number>(1); // Track current step
 
   const [availableRooms, setAvailableRooms] = useState<
@@ -90,8 +91,8 @@ const AccommodationBookingForm: React.FC = () => {
         setFormData({
           bookingType: 'accommodation',
           roomType: '',
-          checkIn: '',
-          checkOut: '',
+          checkIn: today,
+          checkOut: today,
           guestFirstName: '',
           guestLastName: '',
           guestEmail: '',
@@ -120,11 +121,12 @@ const AccommodationBookingForm: React.FC = () => {
     }
   };
 
+   
     const [formData, setFormData] = useState<AccommodationsBookingData>({
         bookingType: 'accommodation',
         roomType: '',
-        checkIn: '',
-        checkOut: '',
+        checkIn: today,
+        checkOut: today,
         guestFirstName: '',
         guestLastName: '',
         guestEmail: '',
