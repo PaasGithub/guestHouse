@@ -15,8 +15,8 @@ const BookingPage = () => {
     return (
         <div className='' >
             <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4">
-                <div className="max-w-fit mx-auto mb-8 p-2 md:bg-gray-200 md:dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-100">
-                    <div className="flex flex-col md:flex-row gap-2 md:gap-0 space-x-2">
+                <div className="max-w-fit mx-auto mb-8 p-2 bg-gray-200 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-100">
+                    <div className="flex flex-row gap-0 space-x-2">
                         <button
                         onClick={() => setBookingType('accommodation')}
                         className={`px-4 py-2 rounded-full transition-colors ${
